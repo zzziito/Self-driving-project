@@ -173,7 +173,33 @@ angle = 1
 print(data[angle])
 ```
 
-이를 바탕으로 최종 주행 코드를 작성했습니다. 
+![24](https://user-images.githubusercontent.com/52185595/100572976-205c0580-331a-11eb-8e54-506dd880114e.png)
+
+```python
+lidar_front = 0
+lidar_set_front = set()
+for angle in range(0, 20):  # 0~20도까지 거리 평균 내서 distance 에 저장
+lidar_set_front.add(data[angle])
+for angle in range(340, 359):
+lidar_set_front.add(data[angle])
+distance_front = sum(lidar_set_front) // len(lidar_set_front)
+if distance_front < 700:
+     lidar_front = 1 
+```
+
+
+이런 식으로 전,좌,우면에 대한 거리 정보를 받아와 주행을 결정했습니다. 
+
+||||
+|------|---|---|---|---|
+|Lidar Front|1|1|1|1|
+|Lidar Right|1|1|0|0|
+|Lidar Left|1|0|1|0|
+||뒤로|왼쪽으로|왼쪽으로|오른쪽으로|
+
+
+사람 얼굴이 인식되지 않을 때는 이런 식으로 주행하도록 했습니다.
+
 
 ## 자동차 완성 
 
